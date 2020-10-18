@@ -8,6 +8,8 @@ import Group from '@vkontakte/vkui/dist/components/Group/Group';
 import Cell from '@vkontakte/vkui/dist/components/Cell/Cell';
 import Div from '@vkontakte/vkui/dist/components/Div/Div';
 import Avatar from '@vkontakte/vkui/dist/components/Avatar/Avatar';
+import bridge from '@vkontakte/vk-bridge';
+import {btnSendClick} from './../utils/sendCLick'
 
 const orangeBackground = {
     backgroundImage: 'linear-gradient(135deg, #ffb73d, #ffa000)'
@@ -25,10 +27,6 @@ const Home = ({ id, go, fetchedUser }) => {
         let { value } = e.currentTarget;
         if (((value <= 300 && value >= 0) || value === '')) setCount( (value === '') ? value : parseInt(value) );
     };
-
-    const btnClickSend = (e) => {
-    	alert(JSON.stringify({name: name, surname: surname, team: team, count: count}));
-	};
 
     return (<Panel id={id}>
             <PanelHeader>Введите свой результат</PanelHeader>
@@ -57,13 +55,13 @@ const Home = ({ id, go, fetchedUser }) => {
                         <FormLayoutGroup top="Кол-во очков">
                         	<Input type="number" placeholder="Повторите кол-во очков" onChange={onChange} value={count}/>
                         </FormLayoutGroup>
-						<Button size="xl"  disabled={(!(count !== "" && name !== '' && surname !== ''))} onClick={btnClickSend}>Отправить</Button>
+						<Button size="xl"  disabled={(!(count !== "" && name !== '' && surname !== ''))} onClick={() => btnSendClick(name, surname, team, count)}>Отправить</Button>
                     </FormLayout>
                 </Div>
             </Group>
         </Panel>
     );
-}
+};
 
 Home.propTypes = {
 	id: PropTypes.string.isRequired,
